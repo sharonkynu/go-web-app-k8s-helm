@@ -1,5 +1,8 @@
-name: CI
+# CICD using GitHub actions
 
+name: CI/CD
+
+# Exclude the workflow to run on changes to the helm chart
 on:
   push:
     branches:
@@ -9,8 +12,7 @@ on:
       - 'k8s/**'
       - 'README.md'
 
-
-  jobs:
+jobs:
 
   build:
     runs-on: ubuntu-latest
@@ -68,7 +70,6 @@ on:
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/go-web-app:${{github.run_id}}
 
-
   update-newtag-in-helm-chart:
     runs-on: ubuntu-latest
 
@@ -86,8 +87,9 @@ on:
 
     - name: Commit and push changes
       run: |
-        git config --global user.email "sharonshaji583@gmail.com"
-        git config --global user.name "Sharon Shaji"
+        git config --global user.email "sharonshaji583gmail.com"
+        git config --global user.name "sharonkynu"
         git add helm/go-web-app-chart/values.yaml
         git commit -m "Update tag in Helm chart"
         git push
+
